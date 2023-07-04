@@ -1,21 +1,21 @@
-name: Ejemplo de GitHub Actions  # Nombre de la acción
+name: GitHub Actions Example  # Name of the action
 
-on: push  # Evento que desencadena la ejecución de la acción (en este caso, un push)
+on: push  # Event that triggers the execution of the action (in this case, a push event)
 
-jobs:  # Definición de los trabajos a realizar
-  build:  # Nombre del trabajo
-    runs-on: ubuntu-latest  # Sistema operativo en el que se ejecutará el trabajo
+jobs:  # Definition of jobs to be performed
+  build:  # Job name
+    runs-on: ubuntu-latest  # Operating system on which the job will run
 
-    steps:  # Definición de los pasos individuales dentro del trabajo
-      - name: Paso 1  # Nombre del paso
-        run: echo "Este es el paso 1"  # Comando a ejecutar en el paso
+    steps:  # Definition of individual steps within the job
+      - name: Step 1  # Step name
+        run: echo "This is step 1"  # Command to be executed in the step
 
-      - name: Paso 2  # Nombre del paso
-        run: echo "Este es el paso 2"  # Comando a ejecutar en el paso
+      - name: Step 2  # Step name
+        run: echo "This is step 2"  # Command to be executed in the step
 
-        if: github.event_name == 'push'  # Condición para ejecutar el paso solo en caso de un push
+        if: github.event_name == 'push'  # Condition to execute the step only in case of a push event
 
-      - name: Paso 3  # Nombre del paso
-        run: echo "Este es el paso 3"  # Comando a ejecutar en el paso
+      - name: Step 3  # Step name
+        run: echo "This is step 3"  # Command to be executed in the step
 
-        needs: [build]  # Especifica que este paso necesita que el trabajo "build" se complete antes de ejecutarse
+        needs: [build]  # Specifies that this step needs the "build" job to complete before being executed
