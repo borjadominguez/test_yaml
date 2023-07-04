@@ -1,9 +1,7 @@
 # Define the name of the GitHub Actions workflow
 name: GitHub Actions Example
-
 # Specify that the workflow should trigger on a push event
-on: push
-
+on: push 
 # Define the jobs to be executed
 jobs:
   # Define the first job with the identifier job_identifier_1
@@ -21,24 +19,17 @@ jobs:
       # Step 1: Echo a message for job_identifier_1
       - name: Step 2 name
         run: echo "This is step 1 on job_identifier_1"
-
-      # Step 2: Echo a message for job_identifier_1, only if the event is a push
       - name: Step 2 name
         run: echo "This is step 2 on job_identifier_1"
         if: github.event_name == 'push'   # Execute this step only if the event is a push
-
-      # Step 3: Check out the repository using the actions/checkout action
       - name: Step 3
         uses: actions/checkout@v3
-
-      # Step 4: Execute multiple commands and set the output_variable
       - name: Step 4
         id: step_4
         run: |
           ls -la
           echo "output_variable=Hello from job_identifier_1" >> "$GITHUB_OUTPUT"
 
-  # Define the second job with the identifier job_identifier_2
   job_identifier_2:
     # Specify that this job depends on the completion of job_identifier_1
     needs: [job_identifier_1]
@@ -46,19 +37,12 @@ jobs:
     # Execute this job only if the event is a push
     if: github.event_name == 'push'
     
-    # Specify the operating system for the job
     runs-on: ubuntu-latest
     
-    # Define the steps to be executed in the job
     steps:
-      # Step 1: Echo a message for job_identifier_2
       - name: Step 1
         run: echo "This is step 1 on job_identifier_2"
-
-      # Step 2: Echo a message for job_identifier_2
       - name: Step 2
         run: echo "This is step 2 on job_identifier_2"
-
-      # Step 3: Access the output_variable from job_identifier_1
       - name: Step 3
         run: echo ${{needs.job_identifier_1.outputs.output_variable}}
