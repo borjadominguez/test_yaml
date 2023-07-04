@@ -18,4 +18,4 @@ jobs:  # Definition of jobs to be performed
       - name: Step 3  # Step name
         run: echo "This is step 3"  # Command to be executed in the step
 
-        needs: [build]  # Specifies that this step needs the "build" job to complete before being executed
+        #needs: [build]  # Specifies that this step needs the "build" job to complete before being executed
