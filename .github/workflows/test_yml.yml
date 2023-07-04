@@ -1,21 +1,40 @@
-name: Ejemplo de GitHub Actions       # Action name
+name: GitHub Actions Example     # Action name
 
-on: push                              # Trigger the workflow when a push event occurs
+on: push                            # Trigger the workflow when a push event occurs
 
-jobs:                                 # Define the jobs
-  build:                              # Job name
-    needs: [build]
-      runs-on: ubuntu-latest          # Run the job on the latest version of Ubuntu
-      steps:                          # Define the step in the job
-        - name: Step 1                # Step name
-          run: echo "This is step 1"  # Command to execute in the step
+jobs:                               # Define the jobs
+  job_identifier_1:                            # Job name
+    runs-on: ubuntu-latest          # Run the job on the latest version of Ubuntu
+    outputs:
+      output_variable: ${{steps.step_4.outputs.output_variable}}
+    steps:                          # Definición de los pasos individuales dentro del trabajo
+      - name: Step 2 name
+        run: echo "This is step 1 on job_identifier_1"  # Command to execute in the step
 
-        - name: Step 2  
-          run: echo "This is step 2" 
-                                      # Execute this step only if the event is a push :
-          if: github.event_name == 'push' 
+      - name: Step 2 name
+        run: echo "This is step 2 on job_identifier_1"
+        if: github.event_name == 'push'   # Execute this step only if the event is a push
 
-        - name: Step 4  
-          uses: actions/checkout@v2   # Use the 'checkout' action from the 'actions/checkout@v2' repository 
+      - name: Step 3
+        uses: actions/checkout@v3   # Use the 'checkout' action from the 'actions/checkout@v3' repository
 
-   #needs: [build]                    # Wait for the 'build' job to complete before executing other jobs or stepse
+      - name: Step 4
+        id: step_4
+        run: |
+          ls -la
+          echo "output_variable=Hello from job_identifier_1" >> "$GITHUB_OUTPUT"
+
+
+  job_identifier_2:                            # Job name
+    needs: [job_identifier_1]       # Execute this job only if the event is a push and when the job_identifier_1 ends
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest          # Run the job on the latest version of Ubuntu
+    steps:                          # Definición de los pasos individuales dentro del trabajo
+      - name: Step 1                # Step name
+        run: echo "This is step 1 on job_identifier_2"  # Command to execute in the step
+
+      - name: Step 2  
+        run: echo "This is step 2 on job_identifier_2"
+
+      - name: Step 3
+        run: echo ${{needs.job_identifier_1.outputs.output_variable}}
