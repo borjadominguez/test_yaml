@@ -2,23 +2,20 @@ name: Ejemplo de GitHub Actions     # Action name
 
 on: push                            # Trigger the workflow when a push event occurs
 
-jobs:                               # Definición de los trabajos a realizar
-  
-  needs: [build]                      # Wait for the 'build' job to complete before executing other jobs or stepse
+jobs:                               # Define the jobs
+  build:                            # Job name
+    runs-on: ubuntu-latest          # Run the job on the latest version of Ubuntu
 
-    build:                            # Job name
-      runs-on: ubuntu-latest          # Run the job on the latest version of Ubuntu
+    steps:                          # Definición de los pasos individuales dentro del trabajo
+      - name: Step 1                # Step name
+        run: echo "This is step 1"  # Comando a ejecutar en el paso
 
-      steps:                          # Definición de los pasos individuales dentro del trabajo
-        - name: Step 1                # Step name
-          run: echo "This is step 1"  # Comando a ejecutar en el paso
-
-        - name: Step 2  
-          run: echo "This is step 2" 
+      - name: Step 2  
+        run: echo "This is step 2" 
                                     # Execute this step only if the event is a push :
-          if: github.event_name == 'push' 
+        if: github.event_name == 'push' 
 
-        - name: Step 4  
-          uses: actions/checkout@v2  # Use the 'checkout' action from the 'actions/checkout@v2' repository 
+      - name: Step 4  
+        uses: actions/checkout@v2   # Use the 'checkout' action from the 'actions/checkout@v2' repository 
 
-  
+  #needs: [build]                    # Wait for the 'build' job to complete before executing other jobs or stepse
