@@ -18,4 +18,4 @@ jobs:  # Definición de los trabajos a realizar
       - name: Paso 3  # Nombre del paso
         run: echo "Este es el paso 3"  # Comando a ejecutar en el paso
 
-        needs: [build]  # Especifica que este paso necesita que el trabajo "build" se complete antes de ejecutarse
+        #needs: [build]  # Especifica que este paso necesita que el trabajo "build" se complete antes de ejecutarse
